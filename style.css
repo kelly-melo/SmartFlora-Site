@@ -1,0 +1,449 @@
+:root {
+    --color-primary-green: #4CAF50;
+    --color-secondary-green: #81C784; 
+    --color-text-dark: #333;
+    --color-text-light: #555;
+    --color-background-light: #f9f9f9;
+    --sidebar-width: 250px;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: var(--color-background-light);
+    color: var(--color-text-dark);
+    line-height: 1.6;
+}
+
+.container {
+    width: 90%;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.section-padding {
+    padding: 60px 0;
+}
+
+.centered-content {
+    text-align: center;
+}
+
+.bg-light-green {
+    background-color: var(--color-secondary-green);
+    color: white;
+}
+
+.grid-2-cols {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+}
+
+.sidebar {
+    width: var(--sidebar-width);
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: white;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.05);
+    padding: 30px 0;
+    z-index: 100;
+}
+
+.logo {
+    padding: 0 30px 40px;
+    display: flex;
+    align-items: center;
+    font-size: 1.5em;
+    font-weight: 600;
+    color: var(--color-primary-green);
+}
+
+.logo-icon {
+    margin-right: 10px;
+}
+
+.sidebar .nav-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar .nav-list li a {
+    display: block;
+    padding: 12px 30px;
+    color: var(--color-text-light);
+    text-decoration: none;
+    font-weight: 400;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.sidebar .nav-list li a:hover,
+.sidebar .nav-list li a.active {
+    background-color: #f1f1f1;
+    color: var(--color-primary-green);
+    font-weight: 600;
+}
+
+.content {
+    margin-left: var(--sidebar-width);
+}
+
+.hero-section {
+    height: 400px;
+    background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.6)), 
+                url('./imagens/hero_background.png') no-repeat center center/cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    position: relative;
+    text-align: center;
+}
+
+.hero-content h1 {
+    font-size: 3.5em;
+    margin-bottom: 5px;
+    font-weight: 300;
+}
+
+.hero-content p {
+    font-size: 1.2em;
+    font-weight: 300;
+}
+
+.search-icon {
+    position: absolute;
+    top: 30px;
+    right: 30px;
+    font-size: 1.5em;
+    cursor: pointer;
+}
+
+.logic-box {
+    border-left: 3px solid var(--color-primary-green);
+    padding-left: 20px;
+    margin: 30px 0;
+    background-color: #f9fff9;
+    padding: 20px;
+}
+
+.logic-box h4 {
+    color: var(--color-primary-green);
+}
+
+.autores-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 30px;
+    margin-top: 30px;
+}
+
+.autor-card {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    text-align: center;
+    border-top: 5px solid var(--color-primary-green);
+}
+
+.autor-card img {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 10px;
+}
+
+.autor-card a {
+    color: var(--color-primary-green);
+    text-decoration: none;
+    font-size: 0.9em;
+}
+
+.btn-download {
+    display: inline-block;
+    background-color: var(--color-primary-green);
+    color: white;
+    text-decoration: none;
+    padding: 12px 25px;
+    border-radius: 4px;
+    font-weight: 600;
+    margin-top: 20px;
+    transition: background-color 0.3s;
+}
+
+.btn-download:hover {
+    background-color: #388E3C;
+}
+
+footer {
+    background-color: #444;
+    color: white;
+    text-align: center;
+    padding: 15px 0;
+    margin-left: var(--sidebar-width);
+}
+
+@media (max-width: 900px) {
+    .grid-2-cols {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .sidebar {
+        display: none;
+    }
+
+    .content {
+        margin-left: 0;
+    }
+
+    footer {
+        margin-left: 0;
+    }
+
+    .hero-section {
+        height: 300px;
+    }
+
+    .hero-content h1 {
+        font-size: 2.5em;
+    }
+}
+
+.small-hero {
+    height: 200px;
+}
+
+/* Estilo para imagens dentro de esquemas (ajustar tamanho) */
+.esquema-conceitual img {
+    max-width: 100%; /* Garante que a imagem não transborde */
+    height: auto;    /* Mantém a proporção da imagem */
+    display: block;  /* Remove espaços extras de linha */
+    margin: 20px auto; /* Centraliza a imagem e adiciona margem */
+    border: 1px solid #ddd; /* Adiciona uma borda sutil */
+    border-radius: 8px; /* Cantos arredondados */
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Sombra suave */
+}
+
+/* Para o vídeo do YouTube */
+.youtube-video {
+    margin: 40px auto;
+    max-width: 800px; /* Largura máxima para o player */
+    background-color: #fff;
+    padding: 25px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+}
+
+.youtube-video h3 {
+    color: var(--color-primary-green);
+    margin-bottom: 10px;
+}
+
+.youtube-video p {
+    font-size: 0.95em;
+    color: var(--color-text-light);
+    margin-bottom: 20px;
+}
+
+.youtube-video iframe {
+    width: 100%; /* Faz o iframe ocupar 100% do seu contêiner */
+    max-width: 560px; /* Garante que não exceda a largura original em telas grandes */
+    height: 315px; /* Altura padrão para vídeos 16:9 */
+    display: block;
+    margin: 0 auto;
+    border-radius: 6px;
+}
+
+/* Estilo para as listas de conexão nos passos de montagem */
+.connection-list {
+    list-style: none; /* Remove marcadores padrão */
+    padding: 0;
+    margin-top: 15px;
+    background-color: #f4f4f4;
+    border-left: 4px solid var(--color-secondary-green);
+    padding: 15px 20px;
+    border-radius: 5px;
+}
+
+.connection-list li {
+    margin-bottom: 8px;
+    color: var(--color-text-dark);
+}
+
+.connection-list li:last-child {
+    margin-bottom: 0;
+}
+
+.connection-list li.attention {
+    color: #d32f2f; /* Cor vermelha para avisos */
+    font-weight: 600;
+}
+
+/* Melhoria no estilo dos passos de montagem */
+.step {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 40px;
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.step-number {
+    font-size: 2.5em;
+    font-weight: 600;
+    color: var(--color-primary-green);
+    margin-right: 25px;
+    flex-shrink: 0; /* Impede que o número diminua */
+    padding-top: 5px;
+}
+
+.step-content h3 {
+    margin-top: 0;
+    color: var(--color-text-dark);
+}
+
+.step-content p {
+    color: var(--color-text-light);
+}
+
+.intro-montagem {
+    font-style: italic;
+    color: var(--color-text-light);
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.call-to-action {
+    text-align: center;
+    margin-top: 50px;
+    padding: 30px;
+    background-color: var(--color-secondary-green);
+    color: white;
+    border-radius: 8px;
+}
+
+.call-to-action p {
+    font-size: 1.1em;
+    margin-bottom: 15px;
+}
+
+.call-to-action .btn-download {
+    background-color: #fff;
+    color: var(--color-primary-green);
+}
+
+.call-to-action .btn-download:hover {
+    background-color: #eee;
+    color: #388E3C;
+}
+
+/* Estilo para a lógica de funcionamento no codigo.html */
+.logic-flow {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+    margin-top: 30px;
+}
+
+.logic-step {
+    background-color: #fff;
+    padding: 25px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    border-top: 4px solid var(--color-primary-green);
+}
+
+.logic-step h4 {
+    color: var(--color-primary-green);
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+
+.logic-step p {
+    font-size: 0.95em;
+    color: var(--color-text-light);
+}
+
+.logic-step .attention {
+    font-weight: 600;
+    color: #d32f2f; /* Cor de destaque para atenção */
+}
+
+/* Para o snippet de código */
+pre {
+    background-color: #2d2d2d; /* Fundo escuro para o código */
+    color: #f8f8f2; /* Texto claro */
+    padding: 20px;
+    border-radius: 8px;
+    overflow-x: auto; /* Permite scroll horizontal para códigos longos */
+    margin-top: 20px;
+    line-height: 1.4;
+    font-family: 'Consolas', 'Monaco', monospace;
+}
+
+code {
+    font-size: 0.9em;
+}
+
+/* Link para GitHub no código */
+.btn-download.github-link {
+    background-color: #24292e; /* Cor do GitHub */
+    margin-bottom: 30px;
+}
+
+.btn-download.github-link:hover {
+    background-color: #333;
+}
+
+/* Seções de Lições Aprendidas */
+#licoes .grid-2-cols {
+    margin-top: 30px;
+}
+
+#licoes .box-content {
+    background-color: #fff;
+    padding: 25px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    border-top: 4px solid var(--color-secondary-green);
+}
+
+#licoes .box-content h4 {
+    color: var(--color-secondary-green);
+    margin-top: 0;
+}
+
+#licoes .box-content p.attention {
+    font-weight: 600;
+    color: #00796b;
+}
+
+#download-final {
+    margin-top: 60px;
+}
+
+.palavra-chave {
+    font-size: 0.9em;
+    color: var(--color-primary-green);
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.descricao-projeto {
+    margin-top: 40px;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}

@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Código e Lógica | SmartFlora</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <aside class="sidebar">
+        <div class="logo">
+            <span class="logo-icon">🍃</span>
+            <span class="logo-text">SmartFlora</span>
+        </div>
+        <nav class="main-nav">
+    <ul class="nav-list">
+        <li><a href="index.html#introducao">Página Inicial</a></li>
+        <li><a href="index.html#objetivo">Objetivo e Lógica</a></li>
+        <li><a href="index.html#componentes">Componentes</a></li>
+        <li><a href="montagem.html">Montagem (Passo a Passo)</a></li>
+        <li><a href="codigo.html" class="active">Código</a></li>
+        <li><a href="index.html#equipe">Equipe</a></li>
+        <li><a href="index.html#download">Download</a></li>
+    </ul>
+</nav>
+    </aside>
+
+    <main class="content">
+        
+        <section id="hero-codigo" class="hero-section small-hero">
+            <div class="hero-content">
+                <h1>Código e Lógica de Controle</h1>
+                <p>O coração do SmartFlora: como a lógica digital controla a natureza.</p>
+            </div>
+        </section>
+
+        <section id="logica" class="section-padding">
+            <div class="container">
+                
+                <h2>🧠 Lógica de Funcionamento (Canvas)</h2>
+                <p>O controle do SmartFlora é baseado em três etapas sequenciais que garantem a eficiência da irrigação e a saúde dos componentes:</p>
+
+                <div class="logic-flow">
+                    
+                    <div class="logic-step">
+                        <h4>1. Inicialização do Sistema (Setup)</h4>
+                        <p>O Arduino é energizado, o Relé configurado como saída digital e o estado inicial da bomba/válvula é definido como **DESLIGADO** (nível HIGH no Pino de Controle do Módulo Relé).</p>
+                    </div>
+
+                    <div class="logic-step">
+                        <h4>2. Leitura e Monitoramento (Loop)</h4>
+                        <p>O Arduino realiza a leitura analógica do Sensor de Umidade do Solo (valor entre 0 e 1023). Esse valor é comparado com o <code>LimiteMinimo</code> predefinido na calibração.</p>
+                        <p class="attention">Se a umidade lida for **Maior** que o <code>LimiteMinimo</code>, o sistema repousa (Estado OK).</p>
+                        <p class="attention">Se a umidade lida for **Menor** que o <code>LimiteMinimo</code> (solo seco), o sistema avança para o Passo 3.</p>
+                    </div>
+                    
+                    <div class="logic-step">
+                        <h4>3. Irrigação (Ação do Atuador)</h4>
+                        <p>O Relé é acionado para o nível **LOW** (aproximadamente 5 segundos) para que a bomba ligue. Esse é o tempo de irrigação. Em seguida, o Relé é desligado, cessando a irrigação.</p>
+                    </div>
+                    
+                    <div class="logic-step">
+                        <h4>4. Período de Descanso e Repetição</h4>
+                        <p>Após a irrigação, o sistema entra em um **Período de Descanso** (ex: 1 hora) para que a água se distribua e a leitura se estabilize. Durante esse período, o sistema ignora o sensor. Após o tempo de descanso, o ciclo volta ao Passo 2 (Leitura).</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="snippets" class="section-padding bg-light-green">
+    <div class="container">
+        <h2>Código Arduino (C/C++) Final V3.1</h2>
+
+        <p>A versão final do SmartFlora inclui a biblioteca **LiquidCrystal** para exibição de status em tempo real, além dos ajustes de calibração e tempos de espera:</p>
+        
+        <a href="[LINK_DO_REPOSITORIO_GITHUB]" target="_blank" class="btn-download">
+            🔗 Código Completo no GitHub
+        </a>
+        
+        <h3>1. Bibliotecas e Configuração (SETUP)</h3>
+        <p>Definição do LCD Paralelo e a inicialização de boas-vindas:</p>
+        <pre><code class="arduino">
+// ------------------------------------------------------------------
+// 1. BIBLIOTECAS NECESSÁRIAS
+// ------------------------------------------------------------------
+#include &lt;LiquidCrystal.h&gt;
+
+// 2. CONFIGURAÇÃO DO LCD PARALELO
+// Pinos do LCD: (RS, E, D4, D5, D6, D7)
+LiquidCrystal lcd(12, 11, 5, 4, 3, 2); 
+
+// 3. DEFINIÇÕES DE PINOS E CONSTANTES
+// ------------------------------------------------------------------
+const int PinoSensorSolo = A1;       // Sensor de Umidade
+const int PinoRele = 9;              // Módulo Relé (SSR) para a Bomba
+
+// Limiar Final Calibrado: Solo seco se a leitura for MAIOR que 420
+const int LIMIAR_SECO = 420; 
+
+// TEMPOS FINAIS (EM MILISSEGUNDOS)
+const int TEMPO_IRRIGACAO = 5000;          // 5 segundos 
+const long TEMPO_ESPERA_IRRIGADO = 1800000; // 30 minutos (Espera longa)
+const long TEMPO_ESPERA_OK = 300000;      // 5 minutos (Espera curta) 
+
+void setup() {
+  pinMode(PinoRele, OUTPUT);
+  digitalWrite(PinoRele, HIGH); // Garante que o relé inicie DESLIGADO (Relé = N.A.)
+  
+  Serial.begin(9600);
+
+  // Inicialização do Display LCD (16 colunas, 2 linhas)
+  lcd.begin(16, 2);
+  lcd.print("SmartFlora V3.1");
+  lcd.setCursor(0, 1); 
+  lcd.print("Pronto p/ Operar"); 
+  
+  delay(2000); 
+  lcd.clear();
+}
+        </code></pre>
+        
+        <h3>2. Lógica Principal (LOOP)</h3>
+        <p>A lógica de decisão, acionamento e os tempos de espera diferenciados:</p>
+        <pre><code class="arduino">
+void loop() {
+  int leituraSolo = analogRead(PinoSensorSolo);
+
+  // 1. Exibir Leitura no Display LCD (Linha 0)
+  lcd.setCursor(0, 0); 
+  lcd.print("Umidade: ");
+  lcd.print(leituraSolo);
+  lcd.print("    "); 
+
+  // 2. Exibir Leitura no Monitor Serial
+  Serial.print("Leitura: "); Serial.print(leituraSolo);
+  Serial.print(" | Limiar: "); Serial.println(LIMIAR_SECO);
+  
+  // 3. LOGICA DE DECISAO: Solo seco se > Limiar
+  if (leituraSolo > LIMIAR_SECO) {
+    
+    // ESTADO SECO: Ligar Bomba!
+    lcd.setCursor(0, 1); 
+    lcd.print("STATUS: IRRIGANDO!"); 
+    Serial.println(">>> SOLO SECO. INICIANDO IRRIGACAO! <<<");
+    
+    // 4. ACAO: LIGA o relé (LOW)
+    digitalWrite(PinoRele, LOW);
+    
+    delay(TEMPO_IRRIGACAO); // 5 segundos
+    
+    // 5. ACAO: DESLIGA
+    digitalWrite(PinoRele, HIGH);
+    
+    // 6. Status e Espera Longa (30 minutos)
+    lcd.setCursor(0, 1);
+    lcd.print("STATUS: AGUARDANDO"); 
+    Serial.println("--- Irrigacao concluida. ---");
+    
+    delay(TEMPO_ESPERA_IRRIGADO); // Espera 30 minutos
+    
+  } else {
+    // ESTADO OK: Mantém o monitoramento
+    
+    // 7. Status no Display
+    lcd.setCursor(0, 1);
+    lcd.print("STATUS: UMIDADE OK"); 
+    Serial.println("Umidade OK.");
+    
+    // 8. Espera Curta (5 minutos)
+    delay(TEMPO_ESPERA_OK); 
+  }
+}
+        </code></pre>
+    </div>
+</section>
+        
+        <section id="licoes" class="section-padding">
+            <div class="container">
+                <h2>📝 Lições Aprendidas e Desafios Superados</h2>
+                <div class="grid-2-cols">
+                    <div class="box-content">
+                        <h4>Desafio: Oxidação e Leitura Falsa</h4>
+                        <p>O nosso primeiro desafio foi a rápida oxidação do sensor de umidade resistivo (com duas hastes de metal). Isso gerava leituras erradas em pouco tempo.</p>
+                        <p class="attention">**Solução:** Migração para o **Sensor Capacitivo**, que é mais durável e não tem contato direto com o metal exposto ao solo.</p>
+                    </div>
+                    <div class="box-content">
+                        <h4>Lição: A Importância do `delay()`</h4>
+                        <p>Percebemos que regar e ler a umidade imediatamente resultava em leituras falsas (a água não tinha tempo de se espalhar). Tivemos que implementar o `TempoDescanso` (o delay de 1 hora).</p>
+                        <p class="attention">**Melhor Prática:** Um sistema de controle eficaz deve incluir períodos de estabilização entre a ação (atuador) e a leitura (sensor).</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="download-final" class="section-padding centered-content bg-light-green">
+            <div class="container">
+                <a href="index.html#download" class="btn-download">Voltar ao Download do Projeto</a>
+            </div>
+        </section>
+
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>SmartFlora | Desenvolvido para a disciplina de Sistemas Digitais.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

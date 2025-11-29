@@ -1,0 +1,102 @@
+// ------------------------------------------------------------------
+// 1. BIBLIOTECAS NECESSÁRIAS
+// ------------------------------------------------------------------
+#include <LiquidCrystal.h>
+
+// ------------------------------------------------------------------
+// 2. CONFIGURAÇÃO DO LCD PARALELO
+// Pinos do LCD: (RS, E, D4, D5, D6, D7)
+LiquidCrystal lcd(12, 11, 5, 4, 3, 2); 
+
+// ------------------------------------------------------------------
+// 3. DEFINIÇÕES DE PINOS E CONSTANTES
+// ------------------------------------------------------------------
+const int PinoSensorSolo = A1;     // Sensor de Umidade
+const int PinoRele = 9;            // Módulo Relé (SSR) para a Bomba 220V
+
+// Limiar Final Calibrado: Solo seco se a leitura for MAIOR que 420
+const int LIMIAR_SECO = 420; 
+
+// TEMPOS FINAIS (EM MILISSEGUNDOS)
+const int TEMPO_IRRIGACAO = 5000;       // 5 segundos 
+const long TEMPO_ESPERA_IRRIGADO = 1800000; // 30 minutos 
+const long TEMPO_ESPERA_OK = 300000;      // 5 minutos 
+
+// ------------------------------------------------------------------
+// FUNÇÃO SETUP (Roda Apenas uma Vez)
+// ------------------------------------------------------------------
+void setup() {
+  // Configuração dos Pinos Digitais
+  pinMode(PinoRele, OUTPUT);
+
+  // Garante que o relé inicie DESLIGADO
+  digitalWrite(PinoRele, HIGH); 
+  
+  // Inicialização Serial (PC)
+  Serial.begin(9600);
+
+  // Inicialização e Boas-Vindas no Display LCD (16 colunas, 2 linhas)
+  lcd.begin(16, 2);
+  
+  // Mensagem de Boas-Vindas
+  lcd.print("SmartFlora V3.1");
+  lcd.setCursor(0, 1); 
+  lcd.print("Pronto p/ Operar"); 
+  
+  delay(2000); 
+  lcd.clear();
+}
+
+// ------------------------------------------------------------------
+// FUNÇÃO LOOP (Lógica Principal)
+// ------------------------------------------------------------------
+void loop() {
+  int leituraSolo = analogRead(PinoSensorSolo);
+
+  // 1. Exibir Leitura no Display LCD (Linha 0)
+  lcd.setCursor(0, 0); 
+  lcd.print("Umidade: ");
+  lcd.print(leituraSolo);
+  lcd.print("    "); 
+
+  // 2. Exibir Leitura no Monitor Serial
+  Serial.print("Leitura: "); Serial.print(leituraSolo);
+  Serial.print(" | Limiar: "); Serial.println(LIMIAR_SECO);
+  
+  // 3. LOGICA DE DECISAO
+  if (leituraSolo > LIMIAR_SECO) {
+    // ESTADO SECO: Ligar Bomba!
+    
+    // Status no Display (Linha 1)
+    lcd.setCursor(0, 1); 
+    lcd.print("STATUS: IRRIGANDO!"); 
+    Serial.println(">>> SOLO SECO. INICIANDO IRRIGACAO! <<<");
+    
+    // 4. ACAO: LIGA o relé (e a bomba)
+    digitalWrite(PinoRele, LOW);
+    
+    delay(TEMPO_IRRIGACAO); 
+    
+    // 5. ACAO: DESLIGA
+    digitalWrite(PinoRele, HIGH);
+    
+    // 6. Status no Display após a Ação
+    lcd.setCursor(0, 1);
+    lcd.print("STATUS: AGUARDANDO"); 
+    Serial.println("--- Irrigacao concluida. ---");
+    
+    // 7. Espera um tempo longo antes de verificar novamente
+    delay(TEMPO_ESPERA_IRRIGADO); 
+    
+  } else {
+    // ESTADO OK: Mantém o monitoramento
+    
+    // 8. Status no Display
+    lcd.setCursor(0, 1);
+    lcd.print("STATUS: UMIDADE OK"); 
+    Serial.println("Umidade OK.");
+    
+    // 9. Espera um tempo menor para a proxima verificacao
+    delay(TEMPO_ESPERA_OK); 
+  }
+}

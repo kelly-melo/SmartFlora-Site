@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartFlora: Sistema de Irrigação Automatizada</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    
+    <aside class="sidebar">
+        <div class="logo">
+            <span class="logo-icon">🍃</span>
+            <span class="logo-text">SmartFlora</span>
+        </div>
+        <nav class="main-nav">
+            <ul class="nav-list">
+                <li><a href="index.html#introducao" class="active">Página Inicial</a></li>
+                <li><a href="index.html#objetivo">Objetivo e Lógica</a></li>
+                <li><a href="index.html#componentes">Componentes</a></li>
+                <li><a href="montagem.html">Montagem (Passo a Passo)</a></li>
+                <li><a href="codigo.html">Código</a></li>
+                <li><a href="index.html#equipe">Equipe</a></li>
+                <li><a href="index.html#download">Download</a></li>
+            </ul>
+        </nav>
+    </aside>
+
+    <main class="content">
+
+        <section id="hero" class="hero-section">
+            <div class="hero-content">
+                <h1>SmartFlora</h1>
+                <p>Inteligência e Sustentabilidade para o Cultivo Urbano.</p>
+            </div>
+            <div class="search-icon">🔍</div> 
+        </section>
+
+        <section id="introducao" class="section-padding">
+            <div class="container">
+                <p class="palavra-chave">#Arduino #SensorDeUmidade #Automação</p>
+                <h2>A Revolução Verde no Seu Vaso</h2>
+                
+                <div id="objetivo" class="descricao-projeto">
+                    <h3>Motivação e Lógica de Funcionamento</h3>
+                    <p>O projeto <strong>SmartFlora</strong> nasceu da necessidade de gerenciar o consumo hídrico de plantas com precisão, evitando o desperdício e garantindo a saúde ideal do solo. Nosso sistema utiliza a <strong>Computação Física</strong> para monitorar e agir autonomamente.</p>
+                    
+                    <div class="logic-box">
+                        <h4>Lógica Central:</h4>
+                        <ol>
+                            <li>O <strong>Sensor Capacitivo</strong> mede a umidade do solo (Entrada).</li>
+                            <li>Se a leitura estiver <strong>abaixo do Limite Mínimo</strong> (solo seco), o Arduino envia um sinal.</li>
+                            <li>O <strong>Módulo Relé</strong> aciona a <strong>Bomba/Válvula</strong> (Atuador) por um tempo predefinido (Irrigação).</li>
+                            <li>Após a irrigação, o sistema entra em um <strong>eríodo de Descanso</strong> para estabilização das leituras.</li>
+                        </ol>
+                    </div>
+
+                    <div class="esquema-conceitual">
+                        <h3>Esquema Conceitual</h3>
+                        <img src="./imagens/esquema_conceitual.jpeg" alt="Esquema de ligação do SmartFlora com Arduino, Sensor e Bomba.">
+                    </div>
+
+                    <div class="youtube-video centered-content">
+    <h3>Veja o SmartFlora em Ação</h3>
+    <p>Assista ao tutorial completo, mostrando o hardware, a lógica e o funcionamento da irrigação em tempo real.</p>
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/SUA_SEU_VIDEO_ID" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>
+
+                </div>
+            </div>
+        </section>
+
+        <section id="componentes" class="section-padding bg-light-green">
+            <div class="container">
+                <h2>Componentes e Plataformas</h2>
+                <div class="grid-2-cols">
+                    <div class="box-content">
+                        <h3>Lista de Hardware</h3>
+                        <ul class="component-list">
+                            <li><strong>Arduino Uno R3</strong> (Microcontrolador)</li>
+                            <li><strong>Sensor de Umidade do Solo Capacitivo</strong> (Entrada)</li>
+                            <li><strong>Módulo Relé 5V</strong> (Acionador)</li>
+                            <li><strong>Bomba de Água 5V</strong> (Atuador)</li>
+                            <li><strong>Fonte Externa</strong> e <strong>Jumpers</strong></li>
+                        </ul>
+                    </div>
+                    <div class="box-content">
+                         <h3>Softwares e Competências</h3>
+                        <ul class="component-list">
+                            <li>Arduino IDE (Programação C/C++)</li>
+                            <li>GitHub (Versionamento e Código Fonte)</li>
+                            <li>Competências em Eletrônica e Lógica de Controle</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="equipe" class="section-padding">
+            <div class="container">
+                <h2>Conheça a Equipe SmartFlora</h2>
+                <div class="autores-grid">
+                    <div class="autor-card">
+                        <img src="./imagens/elisa_martins.jpeg" alt="Foto de Elisa Martins">
+                        <h4>Elisa Martins</h4>
+                        <a href="#" target="_blank">GitHub</a> | <a href="#" target="_blank">LinkedIn</a>
+                    </div>
+                    <div class="autor-card">
+                        <img src="./imagens/fernando_andrade.jpeg" alt="Foto de Fernando Andrade">
+                        <h4>Fernando Andrade</h4>
+                        <a href="#" target="_blank">GitHub</a> | <a href="#" target="_blank">LinkedIn</a>
+                    </div>
+                    <div class="autor-card">
+                        <img src="./imagens/kelly_melo.jpeg" alt="Foto de Kelly Melo">
+                        <h4>Kelly Melo</h4>
+                        <a href="https://github.com/kelly-melo" target="_blank">GitHub</a> | <a href="http://www.linkedin.com/in/kelly-priscilla" target="_blank">LinkedIn</a>
+                    </div>
+                    <div class="autor-card">
+                        <img src="./imagens/maria_eduarda.jpeg" alt="Foto de Maria Eduarda Vasconcelos">
+                        <h4>Maria Eduarda Vasconcelos</h4>
+                        <a href="#" target="_blank">GitHub</a> | <a href="#" target="_blank">LinkedIn</a>
+                    </div>
+                    <div class="autor-card">
+                        <img src="./imagens/renato_chong.jpeg" alt="Foto de Renato Chong">
+                        <h4>Renato Chong</h4>
+                        <a href="#" target="_blank">GitHub</a> | <a href="#" target="_blank">LinkedIn</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="download" class="section-padding centered-content bg-light-green">
+            <div class="container">
+                <h2>Replicar o Projeto</h2>
+                <p>Baixe o projeto completo (Código, Esquemas e Componentes) e comece a montar o seu SmartFlora!</p>
+                <a href="./download/projeto_smartflora.txt" class="btn-download" download>
+                    Download Projeto (.ZIP)
+                </a>
+            </div>
+        </section>
+
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>SmartFlora | Desenvolvido para a disciplina de Sistemas Digitais.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

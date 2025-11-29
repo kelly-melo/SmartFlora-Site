@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Montagem (Passo a Passo) | SmartFlora</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <aside class="sidebar">
+        <div class="logo">
+            <span class="logo-icon">🍃</span>
+            <span class="logo-text">SmartFlora</span>
+        </div>
+        <nav class="main-nav">
+    <ul class="nav-list">
+        <li><a href="index.html#introducao">Página Inicial</a></li>
+        <li><a href="index.html#objetivo">Objetivo e Lógica</a></li>
+        <li><a href="index.html#componentes">Componentes</a></li>
+        <li><a href="montagem.html" class="active">Montagem (Passo a Passo)</a></li>
+        <li><a href="codigo.html">Código</a></li>
+        <li><a href="index.html#equipe">Equipe</a></li>
+        <li><a href="index.html#download">Download</a></li>
+    </ul>
+</nav>
+    </aside>
+
+    <main class="content">
+        
+        <section id="hero-montagem" class="hero-section small-hero">
+            <div class="hero-content">
+                <h1>🛠️ Montagem do Circuito</h1>
+                <p>Siga o guia para ligar o Arduino, sensores e atuadores.</p>
+            </div>
+        </section>
+
+        <section id="passo-a-passo" class="section-padding">
+            <div class="container">
+                <h2>Conexões Físicas Essenciais</h2>
+                <p class="intro-montagem">Atenção! Certifique-se de que o Arduino esteja desconectado de qualquer fonte de energia durante a montagem das conexões elétricas.</p>
+
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h3>Sensor de Umidade (Entrada)</h3>
+                        <p>O Sensor de Umidade Capacitivo fornecerá a leitura da condição do solo. Ele deve ser ligado na porta analógica **A1**.</p>
+                        
+                        <ul class="connection-list">
+                            <li>**Sensor VCC** (Alimentação) $\rightarrow$ Arduino **5V**</li>
+                            <li>**Sensor GND** (Terra) $\rightarrow$ Arduino **GND**</li>
+                            <li>**Sensor AOUT** (Sinal Analógico) $\rightarrow$ Arduino **A1** (Pino de Leitura)</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h3>Display LCD 16x2 (Feedback)</h3>
+                        <p>O display paralelo LCD é vital para exibir a umidade e o *status* do sistema em tempo real, utilizando a biblioteca **LiquidCrystal**.</p>
+                        
+                        <ul class="connection-list">
+                            <li>**LCD RS** $\rightarrow$ Arduino **D12**</li>
+                            <li>**LCD E** $\rightarrow$ Arduino **D11**</li>
+                            <li>**LCD D4-D7** $\rightarrow$ Arduino **D5, D4, D3, D2**</li>
+                            <li>**LCD VCC/GND** $\rightarrow$ Alimentação **5V/GND**</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h3>Módulo Relé e Atuador (Saída)</h3>
+                        <p>O Módulo Relé controla a bomba de água (Atuador) através do pino **D9**.</p>
+                        
+                        <ul class="connection-list">
+                            <li>**Relé VCC** $\rightarrow$ Arduino **5V**</li>
+                            <li>**Relé GND** $\rightarrow$ Arduino **GND**</li>
+                            <li>**Relé IN** (Sinal de Controle) $\rightarrow$ Arduino **Pino Digital D9**</li>
+                            <li class="attention">**ATENÇÃO:** A bomba e o relé utilizam uma **fonte de alimentação externa** para a potência de acionamento.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <h3>Calibração Final (`LIMIAR_SECO`)</h3>
+                        <p>Com o hardware montado e o código carregado, monitore o Display LCD e o Monitor Serial para determinar a leitura analógica ideal (o ponto em que a planta precisa ser regada). Este valor será o seu **`LIMIAR_SECO`** (definido como **420** no nosso código final).</p>
+                    </div>
+                </div>
+
+                <div class="call-to-action">
+                    <p>O circuito está montado! Confira agora os tempos de espera (`TEMPO_ESPERA_IRRIGADO`) e a lógica completa:</p>
+                    <a href="codigo.html" class="btn-download">Ver Código e Lógica</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>SmartFlora | Desenvolvido para a disciplina de Sistemas Digitais.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
